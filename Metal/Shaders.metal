@@ -20,6 +20,8 @@ kernel void pixelateKernel(
     
     uint2 blockOrigin = (gid / pixelSize) * pixelSize;
 
-    float4 color = inTexture.read(uint2(min(blockOrigin.x, size.x - 1), min(blockOrigin.y, size.y - 1)));
-    outTexture.write(color, gid);
+    float4 color = inTexture
+        .read(uint2(min(blockOrigin.x, size.x - 1), min(blockOrigin.y, size.y - 1)));
+    outTexture
+        .write(color, gid);
 }

@@ -13,9 +13,22 @@ struct Pixelate: ParsableCommand {
     @Argument var outputFile: String
     
     mutating func run() throws {
-        let (image, imageType) = try loadImage(from: inputFile)
-        let pixelatedImage = try pixelateImage(image: image)
-        try saveImage(image: pixelatedImage, to: outputFile, with: imageType)
-        print("Image saved to \(outputFile)")
+        let (
+            image,
+            imageType
+        ) = try loadImage(
+            from: inputFile
+        )
+        let pixelatedImage = try pixelateImage(
+            image: image
+        )
+        try saveImage(
+            image: pixelatedImage,
+            to: outputFile,
+            with: imageType
+        )
+        print(
+            "Image saved to \(outputFile)"
+        )
     }
 }
