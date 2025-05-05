@@ -9,7 +9,8 @@ import Metal
 import MetalKit
 
 func pixelateImage(
-    image: CGImage
+    image: CGImage,
+    pixelSize: Int
 ) throws -> CGImage {
     guard let device = MTLCreateSystemDefaultDevice() else {
         throw RuntimeError(
@@ -30,9 +31,12 @@ func pixelateImage(
         )
     }
     
-    let metallibURL = URL(
-        fileURLWithPath: "/Users/aybars/Developer/PixelateCLI/.build/debug/default.metallib"
-    )
+    let currentDir = FileManager.default.currentDirectoryPath
+    let metallibURL = URL(fileURLWithPath: currentDir)
+        .appendingPathComponent(".build")
+        .appendingPathComponent("debug")
+        .appendingPathComponent("default.metallib")
+    
     let library = try device.makeLibrary(
         URL: metallibURL
     )
@@ -48,7 +52,7 @@ func pixelateImage(
         function: kernel
     )
     let descriptor = MTLTextureDescriptor.texture2DDescriptor(
-        pixelFormat: texture.pixelFormat,
+        pixelFormat: .bgra8Unorm,
         width: texture.width,
         height: texture.height,
         mipmapped: false
@@ -82,6 +86,8 @@ func pixelateImage(
             outputTexture,
             index: 1
         )
+    var pixelSizeUInt32 = UInt32(pixelSize)
+    encoder?.setBytes(&pixelSizeUInt32, length: MemoryLayout<UInt32>.size, index: 0)
     
     let w = pipeline.threadExecutionWidth
     let h = pipeline.maxTotalThreadsPerThreadgroup / w
@@ -113,7 +119,10 @@ func pixelateImage(
         mtlTexture: outputTexture,
         options: nil
     )!
-    let context = CIContext()
+    let context = CIContext(options: [
+        .outputColorSpace: CGColorSpaceCreateDeviceRGB(),
+        .workingColorSpace: CGColorSpaceCreateDeviceRGB()
+    ])
     
     let im = context.createCGImage(
         ciImage,
