@@ -3,3 +3,6 @@ build:
 
 clean:
 	rm -rf .build/debug/
+	
+test:
+	.build/debug/pixelate --input art.png --output out.png --pixel-size 8
