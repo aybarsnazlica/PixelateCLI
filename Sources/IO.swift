@@ -15,6 +15,13 @@ struct RuntimeError: LocalizedError {
     }
 }
 
+/// Loads an image from the given file path and returns it as a `CGImage` along with its image type.
+///
+/// This function reads image data from disk using ImageIO and creates a `CGImage` representation.
+///
+/// - Parameter path: The file path to the image to load.
+/// - Returns: A tuple containing the loaded `CGImage` and its image type (`CFString`).
+/// - Throws: A `RuntimeError` if the image cannot be loaded or its type cannot be determined.
 func loadImage(
     from path: String
 ) throws -> (
@@ -58,6 +65,15 @@ func loadImage(
     )
 }
 
+/// Saves a `CGImage` to disk at the specified path with the given image type.
+///
+/// This function uses ImageIO to write a `CGImage` to a file on disk.
+///
+/// - Parameters:
+///   - image: The `CGImage` to save.
+///   - path: The file path to write the image to.
+///   - type: The image type (e.g., kUTTypePNG or kUTTypeJPEG).
+/// - Throws: A `RuntimeError` if the image cannot be written to disk.
 func saveImage(
     image: CGImage,
     to path: String,

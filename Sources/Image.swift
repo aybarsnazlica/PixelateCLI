@@ -8,6 +8,18 @@
 import Metal
 import MetalKit
 
+/// Applies a pixelation effect to a CGImage using a Metal compute shader.
+///
+/// This function sets up the Metal GPU pipeline and dispatches a compute kernel
+/// to apply a pixelation effect to the input image. The pixel size controls the block
+/// size of the pixelation effect. It uses the compiled Metal library located at
+/// `.build/debug/default.metallib`.
+///
+/// - Parameters:
+///   - image: The input `CGImage` to be pixelated.
+///   - pixelSize: The size of each pixel block. Larger values result in more coarse pixelation.
+/// - Returns: A new `CGImage` with the pixelation effect applied.
+/// - Throws: A `RuntimeError` if Metal setup or shader execution fails.
 func pixelateImage(
     image: CGImage,
     pixelSize: Int
