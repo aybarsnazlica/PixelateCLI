@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SOURCE="Metal/Shaders.metal"
-BUILD=".build/debug"
+BUILD=".build/release"
 AIR="$BUILD/Shaders.air"
 LIB="$BUILD/default.metallib"
 
