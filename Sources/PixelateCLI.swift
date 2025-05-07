@@ -17,7 +17,7 @@ import ArgumentParser
 ///   - output: Path to save the output image.
 ///   - pixelSize: The size of the pixelation block. Maximum value is 128.
 @main
-struct Pixelate: ParsableCommand {
+struct PixelateCLI: ParsableCommand {
     @Option(name: .shortAndLong, help: "Path to the input image file.")
     var input: String
 
@@ -37,7 +37,7 @@ struct Pixelate: ParsableCommand {
     ///
     /// This method loads the input image, applies the pixelation effect using the specified pixel size,
     /// and saves the resulting image to the output path.
-    mutating func run() throws {
+    func run() throws {
         let (image, imageType) = try loadImage(from: input)
         let pixelatedImage = try pixelateImage(image: image, pixelSize: pixelSize)
         
