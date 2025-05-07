@@ -1,5 +1,5 @@
 //
-//  Pixelate.swift
+//  PixelateCLI.swift
 //  PixelateCLI
 //
 //  Created by Aybars Nazlica on 2025/04/30.

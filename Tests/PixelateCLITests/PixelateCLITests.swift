@@ -1,5 +1,5 @@
 //
-//  PixelatorTests.swift
+//  PixelateCLITests.swift
 //  PixelateCLI
 //
 //  Created by Aybars Nazlica on 2025/05/07.
