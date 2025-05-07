@@ -12,7 +12,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "pixelate",
+            name: "PixelateCLI",
             dependencies: [
                 .product(
                     name: "ArgumentParser",
@@ -30,6 +30,13 @@ let package = Package(
                     "CoreGraphics"
                 )
             ],
+        ),
+        .testTarget(
+            name: "PixelateCLITests",
+            dependencies: ["PixelateCLI"],
+            resources: [
+                .copy("Resources")
+            ]
         )
     ]
 )
