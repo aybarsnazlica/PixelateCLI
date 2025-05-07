@@ -1,8 +1,17 @@
-build:
-	swift build && ./build_metal.sh
+.PHONY: test clean build-release build-metal
+
+build-release:
+	swift build --configuration release
+	
+build-metal:
+	chmod +x build_metal.sh
+	./build_metal.sh
 
 clean:
-	rm -rf .build/debug/
-	
+	swift package clean
+	rm -rf .build
+
 test:
-	.build/debug/pixelate --input art.png --output out.png --pixel-size 8
+	swift test
+
+all: build-release build-metal
