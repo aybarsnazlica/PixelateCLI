@@ -12,23 +12,23 @@
 ## Requirements
 
 - macOS with Metal support
-- Swift 5.7 or later
+- Swift 5.9 or later
 - Xcode command-line tools
 
 ## Build Instructions
 
 From the project root directory, simply run:
 
-```bash
-make build
+```shell
+make all
 ```
 
-This will build the Swift project and compile the Metal shader into `.build/debug/default.metallib`.
+This will build the Swift project and compile the Metal shader into `.build/release/default.metallib`.
 
 ## Usage
 
-```bash
-.build/debug/pixelate --input path/to/input.png --output path/to/output.png --pixel-size 12
+```shell
+.build/release/PixelateCLI --input path/to/input.png --output path/to/output.png --pixel-size 12
 ```
 
 ### Options
@@ -36,14 +36,6 @@ This will build the Swift project and compile the Metal shader into `.build/debu
 - `--input`, `-i`: Path to the input image (required)
 - `--output`, `-o`: Path where the output image will be saved (required)
 - `--pixel-size`, `-p`: Size of the pixelation block (default: 8, max: 128)
-
-## Example
-
-```bash
-.build/debug/pixelate -i art.png -o art_pixelated.png -p 16
-```
-
-This command pixelates the image with a block size of 16 pixels.
 
 ## License
 
