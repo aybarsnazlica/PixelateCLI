@@ -8,8 +8,18 @@
 import Foundation
 import ImageIO
 
+/// A basic error type for representing runtime failures in the command-line tool.
+///
+/// `RuntimeError` is used throughout the application to represent errors encountered
+/// during file I/O or Metal operations. It conforms to `LocalizedError` to provide
+/// readable error descriptions.
+///
+/// Use this error type when you want to throw a descriptive message as an error.
 struct RuntimeError: LocalizedError {
+    /// A message describing the error.
     let message: String
+
+    /// A user-readable description of the error.
     var errorDescription: String? {
         message
     }
