@@ -16,12 +16,6 @@ make all
 
 This will build the Swift project and compile the Metal shader into `.build/release/default.metallib`.
 
-Alternatively, you can build the tool using SwiftPM directly:
-
-```shell
-swift build -c release
-```
-
 ## Troubleshooting
 
 - Ensure Metal is supported on your macOS system.
