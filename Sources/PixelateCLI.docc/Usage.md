@@ -1,8 +1,8 @@
 # Usage
 
-To run the application pass the input image and output image paths and a pixel size.
-
 ## Example
+
+To run the application pass the input image and output image paths and a pixel size.
 
 ```shell
 .build/release/PixelateCLI --input path/to/input.png --output path/to/output.png --pixel-size 12
