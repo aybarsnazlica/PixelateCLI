@@ -32,15 +32,8 @@ struct RuntimeError: LocalizedError {
 /// - Parameter path: The file path to the image to load.
 /// - Returns: A tuple containing the loaded `CGImage` and its image type (`CFString`).
 /// - Throws: A `RuntimeError` if the image cannot be loaded or its type cannot be determined.
-func loadImage(
-    from path: String
-) throws -> (
-    CGImage,
-    CFString
-) {
-    let inputURL = URL(
-        fileURLWithPath: path
-    )
+func loadImage(from path: String) throws -> (CGImage, CFString) {
+    let inputURL = URL(fileURLWithPath: path)
     
     guard let imageSource = CGImageSourceCreateWithURL(
         inputURL as CFURL,
@@ -69,10 +62,7 @@ func loadImage(
         )
     }
     
-    return (
-        image,
-        imageType
-    )
+    return (image, imageType)
 }
 
 /// Saves a `CGImage` to disk at the specified path with the given image type.
@@ -89,9 +79,7 @@ func saveImage(
     to path: String,
     with type: CFString
 ) throws {
-    let outputURL = URL(
-        fileURLWithPath: path
-    )
+    let outputURL = URL(fileURLWithPath: path)
     
     guard let destination = CGImageDestinationCreateWithURL(
         outputURL as CFURL,
@@ -104,15 +92,9 @@ func saveImage(
         )
     }
     
-    CGImageDestinationAddImage(
-        destination,
-        image,
-        nil
-    )
+    CGImageDestinationAddImage(destination, image, nil)
     
-    if !CGImageDestinationFinalize(
-        destination
-    ) {
+    if !CGImageDestinationFinalize(destination) {
         throw RuntimeError(
             message: "Failed to write image."
         )

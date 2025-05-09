@@ -43,9 +43,7 @@ struct MetalContext {
             )
         }
 
-        let pipeline = try device.makeComputePipelineState(
-            function: kernel
-        )
+        let pipeline = try device.makeComputePipelineState(function: kernel)
 
         self.device = device
         self.commandQueue = device.makeCommandQueue()!
@@ -135,7 +133,9 @@ struct Pixelator {
     private func encodePixelation(input: MTLTexture, output: MTLTexture, pixelSize: Int) throws {
         guard let commandBuffer = context.commandQueue.makeCommandBuffer(),
               let encoder = commandBuffer.makeComputeCommandEncoder() else {
-            throw RuntimeError(message: "Failed to create Metal resources.")
+            throw RuntimeError(
+                message: "Failed to create Metal resources."
+            )
         }
 
         encoder.setComputePipelineState(context.pipeline)
