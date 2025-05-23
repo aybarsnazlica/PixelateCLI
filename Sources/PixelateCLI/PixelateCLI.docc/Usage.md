@@ -20,4 +20,3 @@ The `--pixel-size` option accepts integers from 1 to 128. Lower values apply fin
 
 - Input images must be readable by CoreGraphics (e.g., PNG, JPEG).
 - Output files will be overwritten if they already exist.
-- Ensure the Metal shader file `default.metallib` is present in `.build/release/`.
