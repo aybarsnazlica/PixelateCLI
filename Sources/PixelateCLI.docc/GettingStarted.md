@@ -11,7 +11,7 @@
 From the project root directory, simply run:
 
 ```shell
-make all
+make install
 ```
 
 This will build the Swift project and compile the Metal shader into `.build/release/default.metallib`.
