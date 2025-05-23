@@ -16,5 +16,5 @@ make install
 
 ## Troubleshooting
 
-- You might need to use `sudo make`.
+- You might need to use `sudo` with `make`.
 - Ensure Metal is supported on your macOS system.
