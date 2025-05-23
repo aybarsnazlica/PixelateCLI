@@ -9,11 +9,13 @@
 - Accepts input and output paths with `--input` and `--output`
 - Uses Metal compute shaders for performance
 
-## Documentation
+## Build Instructions
 
-To build documentation for this package, use Xcode. Open the `Package.swift` file and select **Product > Build Documentation**.
+From the project root directory run:
 
-Please refer to **Getting Started** and **Usage** for how to build and run the application.
+```shell
+make install
+```
 
 ## License
 

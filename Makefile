@@ -1,10 +1,10 @@
-.PHONY: test clean build-release build-metal
+.PHONY: test clean build metal install
 
 PREFIX_DIR := /usr/local/bin
 
 build:
-	swift build -c release --product PixelateCLI
-	
+	swift build -c release
+
 metal:
 	chmod +x build_metal.sh
 	./build_metal.sh
