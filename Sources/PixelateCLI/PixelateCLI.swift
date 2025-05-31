@@ -39,14 +39,17 @@ struct PixelateCLI: ParsableCommand {
     /// and saves the resulting image to the output path.
     func run() throws {
         let (image, imageType) = try loadImage(from: input)
-        let pixelatedImage = try pixelateImage(image: image, pixelSize: pixelSize)
-        
+        let pixelatedImage = try pixelateImage(
+            image: image,
+            pixelSize: pixelSize
+        )
+
         try saveImage(
             image: pixelatedImage,
             to: output,
             with: imageType
         )
-        
+
         print("Image saved to \(output)")
     }
 }

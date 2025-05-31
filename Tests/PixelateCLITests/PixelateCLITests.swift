@@ -5,11 +5,11 @@
 //  Created by Aybars Nazlica on 2025/05/07.
 //
 
-
-import Testing
 import CoreGraphics
 import Foundation
 import ImageIO
+import Testing
+
 @testable import PixelateCLI
 
 /// A suite of unit tests for the Pixelator component.
@@ -21,7 +21,7 @@ struct PixelatorTests {
     @Test func testPixelateWithValidImage() throws {
         // Load a test image from the test bundle
         let testImage = try loadTestImage(named: "art.png")
-        
+
         var pixelator = try Pixelator()
         let output = try pixelator.pixelate(image: testImage, pixelSize: 8)
 
@@ -46,11 +46,14 @@ struct PixelatorTests {
     private func loadTestImage(named name: String) throws -> CGImage {
         let bundle = Bundle.module
         guard let url = bundle.url(forResource: name, withExtension: nil) else {
-            throw RuntimeError(message: "Test image not found in bundle: \(name)")
+            throw RuntimeError(
+                message: "Test image not found in bundle: \(name)"
+            )
         }
 
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
-              let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+            let image = CGImageSourceCreateImageAtIndex(source, 0, nil)
+        else {
             throw RuntimeError(message: "Failed to decode test image: \(name)")
         }
         return image

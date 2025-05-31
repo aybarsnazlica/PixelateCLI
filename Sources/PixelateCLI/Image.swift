@@ -35,9 +35,11 @@ struct MetalContext {
         let libraryURL = URL(fileURLWithPath: libraryPath)
         let library = try device.makeLibrary(URL: libraryURL)
 
-        guard let kernel = library.makeFunction(
-            name: kernelFunction
-        ) else {
+        guard
+            let kernel = library.makeFunction(
+                name: kernelFunction
+            )
+        else {
             throw RuntimeError(
                 message: "Failed to load kernel '\(kernelFunction)'"
             )
@@ -63,7 +65,7 @@ struct Pixelator {
         CIContext(
             options: [
                 .outputColorSpace: CGColorSpaceCreateDeviceRGB(),
-                .workingColorSpace: CGColorSpaceCreateDeviceRGB()
+                .workingColorSpace: CGColorSpaceCreateDeviceRGB(),
             ]
         )
     }()
@@ -72,9 +74,13 @@ struct Pixelator {
     ///
     /// - Throws: A `RuntimeError` if the Metal device, command queue, or shader pipeline cannot be initialized.
     init() throws {
-        let path = FileManager.default.currentDirectoryPath +
-                   "/.build/release/default.metallib"
-        self.context = try MetalContext(libraryPath: path, kernelFunction: "pixelateKernel")
+        let path =
+            FileManager.default.currentDirectoryPath
+            + "/.build/release/default.metallib"
+        self.context = try MetalContext(
+            libraryPath: path,
+            kernelFunction: "pixelateKernel"
+        )
     }
 
     /// Applies a pixelation effect to the provided image.
@@ -97,7 +103,11 @@ struct Pixelator {
         )
 
         let outputTexture = try makeOutputTexture(from: inputTexture)
-        try encodePixelation(input: inputTexture, output: outputTexture, pixelSize: pixelSize)
+        try encodePixelation(
+            input: inputTexture,
+            output: outputTexture,
+            pixelSize: pixelSize
+        )
         return try createImage(from: outputTexture)
     }
 
@@ -106,7 +116,8 @@ struct Pixelator {
     /// - Parameter input: The input `MTLTexture` from which to copy dimensions.
     /// - Returns: A writable `MTLTexture` to use as the output.
     /// - Throws: A `RuntimeError` if the texture could not be created.
-    private func makeOutputTexture(from input: MTLTexture) throws -> MTLTexture {
+    private func makeOutputTexture(from input: MTLTexture) throws -> MTLTexture
+    {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: .bgra8Unorm,
             width: input.width,
@@ -115,7 +126,8 @@ struct Pixelator {
         )
         descriptor.usage = [.shaderRead, .shaderWrite]
 
-        guard let texture = context.device.makeTexture(descriptor: descriptor) else {
+        guard let texture = context.device.makeTexture(descriptor: descriptor)
+        else {
             throw RuntimeError(message: "Failed to create output texture.")
         }
         return texture
@@ -130,9 +142,14 @@ struct Pixelator {
     ///   - output: The output texture to write to.
     ///   - pixelSize: The size of each pixel block.
     /// - Throws: A `RuntimeError` if the command buffer or encoder cannot be created.
-    private func encodePixelation(input: MTLTexture, output: MTLTexture, pixelSize: Int) throws {
+    private func encodePixelation(
+        input: MTLTexture,
+        output: MTLTexture,
+        pixelSize: Int
+    ) throws {
         guard let commandBuffer = context.commandQueue.makeCommandBuffer(),
-              let encoder = commandBuffer.makeComputeCommandEncoder() else {
+            let encoder = commandBuffer.makeComputeCommandEncoder()
+        else {
             throw RuntimeError(
                 message: "Failed to create Metal resources."
             )
@@ -143,7 +160,11 @@ struct Pixelator {
         encoder.setTexture(output, index: 1)
 
         var blockSize = UInt32(pixelSize)
-        encoder.setBytes(&blockSize, length: MemoryLayout<UInt32>.size, index: 0)
+        encoder.setBytes(
+            &blockSize,
+            length: MemoryLayout<UInt32>.size,
+            index: 0
+        )
 
         let w = context.pipeline.threadExecutionWidth
         let h = context.pipeline.maxTotalThreadsPerThreadgroup / w
@@ -159,7 +180,7 @@ struct Pixelator {
                     height: h,
                     depth: 1
                 )
-        )
+            )
 
         encoder.endEncoding()
         commandBuffer.commit()
@@ -171,12 +192,15 @@ struct Pixelator {
     /// - Parameter texture: The Metal texture containing the pixelated image.
     /// - Returns: A `CGImage` representation of the texture.
     /// - Throws: A `RuntimeError` if the conversion fails.
-    private mutating func createImage(from texture: MTLTexture) throws -> CGImage {
-        guard let ciImage = CIImage(
-            mtlTexture: texture,
-            options: nil
-        ),
-              let cgImage = ciContext.createCGImage(
+    private mutating func createImage(from texture: MTLTexture) throws
+        -> CGImage
+    {
+        guard
+            let ciImage = CIImage(
+                mtlTexture: texture,
+                options: nil
+            ),
+            let cgImage = ciContext.createCGImage(
                 ciImage,
                 from: CGRect(
                     x: 0,
@@ -184,7 +208,8 @@ struct Pixelator {
                     width: texture.width,
                     height: texture.height
                 )
-              ) else {
+            )
+        else {
             throw RuntimeError(
                 message: "Failed to convert output texture to CGImage."
             )
@@ -204,7 +229,8 @@ struct Pixelator {
 /// - Throws: Errors thrown from the `Pixelator` initializer or pixelation process.
 func pixelateImage(image: CGImage, pixelSize: Int) throws -> CGImage {
     var pixelator = try Pixelator()
-    return try pixelator
+    return
+        try pixelator
         .pixelate(
             image: image,
             pixelSize: pixelSize
