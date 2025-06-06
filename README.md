@@ -22,7 +22,3 @@ make install
 To build documentation for this package, use Xcode. Open the Package.swift file and select **Product** > **Build Documentation**.
 
 Please refer to **Getting Started** and **Usage** for further details.
-
-## License
-
-MIT License
