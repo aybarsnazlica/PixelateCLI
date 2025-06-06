@@ -17,7 +17,7 @@ import ArgumentParser
 ///   - output: Path to save the output image.
 ///   - pixelSize: The size of the pixelation block. Maximum value is 128.
 @main
-struct PixelateCLI: ParsableCommand {
+struct Pixelate: ParsableCommand {
     @Option(name: .shortAndLong, help: "Path to the input image file.")
     var input: String
 
