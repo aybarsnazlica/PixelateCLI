@@ -167,7 +167,7 @@ struct Pixelator {
         )
 
         let w = context.pipeline.threadExecutionWidth
-        let h = context.pipeline.maxTotalThreadsPerThreadgroup / w
+        let h = context.pipeline.maxTotalThreadsPerThreadgroup
         encoder
             .dispatchThreads(
                 MTLSize(
